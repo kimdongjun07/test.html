@@ -83,13 +83,17 @@
                         <p class="text-xs text-slate-500 font-medium">월간 퍼즐 달성 시스템</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span class="hidden sm:inline-flex items-center text-xs font-semibold px-3.5 py-2 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">
+                <div class="flex items-center gap-2.5">
+                    <button onclick="openWorkoutSettingsModal()" class="px-3.5 py-2.5 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition flex items-center gap-1.5 border border-indigo-200">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="hidden sm:inline">운동 종목 설정</span>
+                    </button>
+                    <span class="hidden md:inline-flex items-center text-xs font-semibold px-3 py-2 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></span> user 인증됨
                     </span>
-                    <button onclick="handleLogout()" class="px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition flex items-center gap-2 border border-slate-200 hover:border-red-200">
+                    <button onclick="handleLogout()" class="px-3.5 py-2.5 text-xs font-bold text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition flex items-center gap-1.5 border border-slate-200 hover:border-red-200">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span>로그아웃</span>
+                        <span class="hidden sm:inline">로그아웃</span>
                     </button>
                 </div>
             </div>
@@ -179,47 +183,15 @@
 
             <!-- Workout Preset Guide Bar -->
             <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-indigo-900/50">
-                <h3 class="font-bold text-lg mb-4 flex items-center gap-2.5">
-                    <i class="fa-solid fa-circle-check text-indigo-400"></i>
-                    <span>지정 운동 필수 체크리스트 가이드</span>
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3.5">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-lg shrink-0">
-                            <i class="fa-solid fa-child-reaching"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold">팔 굽혀 펴기</p>
-                            <p class="text-xs text-amber-200/80 font-medium">50회 목표</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3.5">
-                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center text-lg shrink-0">
-                            <i class="fa-solid fa-stairs"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold">계단오르기</p>
-                            <p class="text-xs text-blue-200/80 font-medium">일상 속 실천</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3.5">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-lg shrink-0">
-                            <i class="fa-solid fa-person-running"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold">러닝</p>
-                            <p class="text-xs text-emerald-200/80 font-medium">5km 완주</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3.5">
-                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg shrink-0">
-                            <i class="fa-solid fa-dumbbell"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold">스쿼트</p>
-                            <p class="text-xs text-purple-200/80 font-medium">50회 목표</p>
-                        </div>
-                    </div>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2.5">
+                        <i class="fa-solid fa-circle-check text-indigo-400"></i>
+                        <span>내 운동 체크리스트 가이드</span>
+                    </h3>
+                    <button onclick="openWorkoutSettingsModal()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl transition border border-white/10 font-medium">종목 편집하기</button>
+                </div>
+                <div id="workoutPresetGuideGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <!-- Dynamically populated preset cards -->
                 </div>
             </div>
 
@@ -228,6 +200,52 @@
         <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 mt-auto">
             &copy; 2026 월간 운동 체크퍼즐 시스템. 안전하게 세션 관리 및 기록됩니다.
         </footer>
+    </div>
+
+    <!-- Workout Settings Modal for Customization -->
+    <div id="workoutSettingsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 transform transition-all border border-slate-100 max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">운동 종목 맞춤 설정</h3>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">매일 수행할 퍼즐 운동 항목을 추가하거나 삭제하세요</p>
+                </div>
+                <button onclick="closeWorkoutSettingsModal()" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-600 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Current List of Workouts -->
+            <div class="space-y-3 mb-6 overflow-y-auto flex-1 pr-1" id="editableWorkoutList">
+                <!-- Injected items -->
+            </div>
+
+            <!-- Add New Workout Form -->
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-6">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3"><i class="fa-solid fa-plus text-indigo-600 mr-1"></i> 새 운동 종목 추가</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+                    <input type="text" id="newWorkoutName" placeholder="운동 이름 (예: 플랭크)" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:col-span-2">
+                    <input type="text" id="newWorkoutDesc" placeholder="목표 (예: 2분)" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500 font-medium">색상 아이콘:</span>
+                        <select id="newWorkoutColor" class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:outline-none">
+                            <option value="amber">오렌지/앰버</option>
+                            <option value="blue">블루</option>
+                            <option value="emerald">에메랄드</option>
+                            <option value="purple">퍼플</option>
+                            <option value="rose">로즈/레드</option>
+                        </select>
+                    </div>
+                    <button onclick="addNewWorkoutItem()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition shadow-md shadow-indigo-100">추가하기</button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end">
+                <button onclick="closeWorkoutSettingsModal()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl transition shadow-lg shadow-indigo-100">완료</button>
+            </div>
+        </div>
     </div>
 
     <div id="dayDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
@@ -254,13 +272,15 @@
     </div>
 
     <script>
-        // Preset required workout items
-        const WORKOUT_TYPES = [
-            { id: 'pushup', name: '팔 굽혀 펴기 (50회)', icon: 'fa-child-reaching', color: 'text-amber-500 bg-amber-50' },
-            { id: 'stairs', name: '계단오르기', icon: 'fa-stairs', color: 'text-blue-500 bg-blue-50' },
-            { id: 'running', name: '러닝 (5km)', icon: 'fa-person-running', color: 'text-emerald-500 bg-emerald-50' },
-            { id: 'squat', name: '스쿼트 (50회)', icon: 'fa-dumbbell', color: 'text-purple-500 bg-purple-50' }
+        // Default required workout items or load from localStorage
+        const DEFAULT_WORKOUT_TYPES = [
+            { id: 'pushup', name: '팔 굽혀 펴기 (50회)', desc: '50회 목표', icon: 'fa-child-reaching', color: 'text-amber-500 bg-amber-50' },
+            { id: 'stairs', name: '계단오르기', desc: '일상 속 실천', icon: 'fa-stairs', color: 'text-blue-500 bg-blue-50' },
+            { id: 'running', name: '러닝 (5km)', desc: '5km 완주', icon: 'fa-person-running', color: 'text-emerald-500 bg-emerald-50' },
+            { id: 'squat', name: '스쿼트 (50회)', desc: '50회 목표', icon: 'fa-dumbbell', color: 'text-purple-500 bg-purple-50' }
         ];
+
+        let WORKOUT_TYPES = JSON.parse(localStorage.getItem('fitness_custom_workouts_v2') || JSON.stringify(DEFAULT_WORKOUT_TYPES));
 
         // State variables
         let isLoggedIn = false;
@@ -312,6 +332,125 @@
             }, 200);
         }
 
+        // Workout Settings Modal Functions
+        function openWorkoutSettingsModal() {
+            renderEditableWorkoutList();
+            document.getElementById('workoutSettingsModal').classList.remove('hidden');
+        }
+
+        function closeWorkoutSettingsModal() {
+            document.getElementById('workoutSettingsModal').classList.add('hidden');
+            renderWorkoutGuideBar();
+            renderCalendar();
+            updateStats();
+        }
+
+        function renderEditableWorkoutList() {
+            const container = document.getElementById('editableWorkoutList');
+            container.innerHTML = '';
+
+            if (WORKOUT_TYPES.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">등록된 운동 종목이 없습니다. 새 운동을 추가해주세요.</p>';
+                return;
+            }
+
+            WORKOUT_TYPES.forEach((w, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-200';
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl ${w.color} flex items-center justify-center text-base shadow-xs">
+                            <i class="fa-solid ${w.icon}"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-sm text-slate-900">${w.name}</span>
+                            <span class="text-xs text-slate-500 block">${w.desc || ''}</span>
+                        </div>
+                    </div>
+                    <button onclick="removeWorkoutItem(${index})" class="w-9 h-9 bg-white hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-xl border border-slate-200 hover:border-red-200 transition flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function addNewWorkoutItem() {
+            const nameInput = document.getElementById('newWorkoutName');
+            const descInput = document.getElementById('newWorkoutDesc');
+            const colorSelect = document.getElementById('newWorkoutColor');
+
+            const name = nameInput.value.trim();
+            const desc = descInput.value.trim() || '목표 달성';
+            const colorKey = colorSelect.value;
+
+            if (!name) {
+                showModal('입력 오류', '운동 이름을 입력해주세요.', 'error');
+                return;
+            }
+
+            let colorClass = 'text-amber-500 bg-amber-50';
+            let iconClass = 'fa-dumbbell';
+            if (colorKey === 'blue') {
+                colorClass = 'text-blue-500 bg-blue-50';
+                iconClass = 'fa-person-swimming';
+            } else if (colorKey === 'emerald') {
+                colorClass = 'text-emerald-500 bg-emerald-50';
+                iconClass = 'fa-person-running';
+            } else if (colorKey === 'purple') {
+                colorClass = 'text-purple-500 bg-purple-50';
+                iconClass = 'fa-bolt';
+            } else if (colorKey === 'rose') {
+                colorClass = 'text-rose-500 bg-rose-50';
+                iconClass = 'fa-fire';
+            }
+
+            const newId = 'custom_' + Date.now();
+            WORKOUT_TYPES.push({
+                id: newId,
+                name: name,
+                desc: desc,
+                icon: iconClass,
+                color: colorClass
+            });
+
+            localStorage.setItem('fitness_custom_workouts_v2', JSON.stringify(WORKOUT_TYPES));
+
+            nameInput.value = '';
+            descInput.value = '';
+            renderEditableWorkoutList();
+        }
+
+        function removeWorkoutItem(index) {
+            if (WORKOUT_TYPES.length <= 1) {
+                showModal('삭제 불가', '최소 1개 이상의 운동 종목이 필요합니다.', 'error');
+                return;
+            }
+            WORKOUT_TYPES.splice(index, 1);
+            localStorage.setItem('fitness_custom_workouts_v2', JSON.stringify(WORKOUT_TYPES));
+            renderEditableWorkoutList();
+        }
+
+        function renderWorkoutGuideBar() {
+            const grid = document.getElementById('workoutPresetGuideGrid');
+            grid.innerHTML = '';
+
+            WORKOUT_TYPES.forEach(w => {
+                const div = document.createElement('div');
+                div.className = 'bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex items-center gap-3.5';
+                div.innerHTML = `
+                    <div class="w-10 h-10 rounded-xl ${w.color} flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid ${w.icon}"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">${w.name}</p>
+                        <p class="text-xs text-white/70 font-medium">${w.desc || ''}</p>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
         // Authentication Handlers
         function handleLogin(e) {
             e.preventDefault();
@@ -323,6 +462,7 @@
                 localStorage.setItem('fitness_is_logged_in', 'true');
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboardScreen').classList.remove('hidden');
+                renderWorkoutGuideBar();
                 renderCalendar();
                 updateStats();
             } else {
@@ -341,6 +481,7 @@
 
         // Check persistent login on window load
         window.addEventListener('DOMContentLoaded', () => {
+            renderWorkoutGuideBar();
             if (localStorage.getItem('fitness_is_logged_in') === 'true') {
                 isLoggedIn = true;
                 document.getElementById('loginScreen').classList.add('hidden');
@@ -413,7 +554,8 @@
 
             const dayWorkouts = workoutData[dateKey] || {};
             const completedCount = Object.values(dayWorkouts).filter(Boolean).length;
-            const isCompletedAll = completedCount === WORKOUT_TYPES.length;
+            const totalRequired = WORKOUT_TYPES.length;
+            const isCompletedAll = totalRequired > 0 && completedCount === totalRequired;
 
             let badgeClass = 'bg-white border-slate-200 hover:border-indigo-300 shadow-xs';
             if (isCompletedAll) {
@@ -439,7 +581,7 @@
             div.innerHTML = `
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-extrabold ${isToday ? 'bg-indigo-600 text-white px-2 py-0.5 rounded-lg shadow-xs' : 'text-slate-700'}">${dayNum}</span>
-                    ${isCompletedAll ? '<span class="text-emerald-600 text-xs font-bold"><i class="fa-solid fa-circle-check"></i></span>' : `<span class="text-[10px] font-bold text-slate-400">${completedCount}/${WORKOUT_TYPES.length}</span>`}
+                    ${isCompletedAll ? '<span class="text-emerald-600 text-xs font-bold"><i class="fa-solid fa-circle-check"></i></span>' : `<span class="text-[10px] font-bold text-slate-400">${completedCount}/${totalRequired}</span>`}
                 </div>
                 <div class="my-auto py-1 flex items-center justify-center gap-2 flex-wrap">
                     ${dotsHtml}
@@ -472,7 +614,7 @@
                         </div>
                         <div>
                             <span class="font-bold text-sm text-slate-900 block">${w.name}</span>
-                            <span class="text-xs text-slate-500 font-medium">완료 시 체크</span>
+                            <span class="text-xs text-slate-500 font-medium">${w.desc || '완료 시 체크'}</span>
                         </div>
                     </div>
                     <input type="checkbox" data-id="${w.id}" ${isChecked ? 'checked' : ''} class="w-5 h-5 text-indigo-600 rounded-lg border-slate-300 focus:ring-indigo-500 cursor-pointer">
@@ -525,15 +667,16 @@
 
             let totalWorkoutsCount = 0;
             let activeDaysCount = 0;
-            let totalPossibleWorkouts = new Date(year, month + 1, 0).getDate() * WORKOUT_TYPES.length;
+            const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+            let totalPossibleWorkouts = totalDaysInMonth * WORKOUT_TYPES.length;
             let completedWorkoutsInMonth = 0;
 
             Object.keys(workoutData).forEach(dateKey => {
                 if (dateKey.startsWith(monthPrefix)) {
                     const dayW = workoutData[dateKey];
                     let dayCount = 0;
-                    Object.values(dayW).forEach(val => {
-                        if (val) {
+                    WORKOUT_TYPES.forEach(w => {
+                        if (dayW[w.id]) {
                             totalWorkoutsCount++;
                             completedWorkoutsInMonth++;
                             dayCount++;
@@ -545,7 +688,7 @@
                 }
             });
 
-            const achievementRate = Math.round((completedWorkoutsInMonth / totalPossibleWorkouts) * 100) || 0;
+            const achievementRate = totalPossibleWorkouts > 0 ? Math.round((completedWorkoutsInMonth / totalPossibleWorkouts) * 100) : 0;
 
             document.getElementById('statTotalWorkouts').innerText = `${totalWorkoutsCount} 회`;
             document.getElementById('statActiveDays').innerText = `${activeDaysCount} 일`;
